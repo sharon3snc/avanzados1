@@ -12,12 +12,32 @@ function App() {
 
   const handleClick=()=> {setShow(!show);};
 
+  const [allProducts, setAllProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [countProducts, setCountProducts] = useState(0);
 
   return (
     <div className="App">
       <div>
-        <Product/>
-        <Cart/>
+        <Product 
+          allProducts={allProducts} 
+          setAllProducts={setAllProducts} 
+          total={total} 
+          setTotal={setTotal} 
+          countProducts={countProducts} 
+          setCounProducts={setCountProducts}
+        />
+
+        <Cart 
+          allProducts={allProducts} 
+          setAllProducts={setAllProducts} 
+          total={total} 
+          setTotal={setTotal} 
+          countProducts={countProducts} 
+          setCounProducts={setCountProducts}
+        />
+      
+      <hr/>
       <button onClick={handleClick}>Toggle</button>
       </div>
       {show && (

@@ -1,36 +1,34 @@
-import { useState } from "react";
 
-function Product () {
-    const [count,setCount] = useState(0);
+import {data} from "./data"
 
-    const props= [
-        {name: 'helado', price:6},
-        {name: 'palomitas', price:3},
-        {name: 'coca cola', price:1},
-    ]
+const ProductList = ({allProducts, setAllProducts, total, setTotal}) => {
+    const onAddProduct =(product) => {
 
-    const handleIncrease =() => {
-        setCount(count+1);
-    };
+        if(allProducts.find((item)=> item.id === product.id)) {
+            const products = allProducts.map(item=> 
+                item.id === product.id 
+                ? {...item, quantity: item.quantity+1}
+                : item
+            );
 
-    const handleDecrease= () => {
-        if (count>0) {
-            setCount(count-1);
+            setTotal(total+product.price*product.quantity);
+            return setAllProducts([...products]);
         }
+        setTotal(total+product.price*product.quantity);
+        setAllProducts([...allProducts, product]);
     };
-
-    const totalPrice= props.price* count;
 
     return (
         <div>
-            <h3>{props.name}</h3>
-            <p>Unit price: ${props.price}</p>
-            <button OnClick={handleIncrease}>-</button>
-            <span>{count}</span>
-            <button OnClick={handleDecrease}>+</button>
-            <p>Total price: ${totalPrice}</p>
+            {data.map((product) => (
+                <div key={product.id}>
+                    <h3 className='productName'> {product.name} </h3>
+                    <p className='productPrice'> {product.price}€</p>
+                    <button onClick={() => onAddProduct(product)}>Add to cart</button>
+                </div>
+            ))}
         </div>
     );
 }
 
-export default Product
+export default ProductList;
